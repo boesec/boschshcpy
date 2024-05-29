@@ -24,6 +24,7 @@ from .models_impl import (
     SHCLightControl,
     SHCLightSwitch,
     SHCLightSwitchBSM,
+    SHCOutdoorSiren,
     SHCPresenceSimulationSystem,
     SHCSmartPlug,
     SHCSmartPlugCompact,
@@ -263,6 +264,13 @@ class SHCDeviceHelper:
         if "WLS" not in SUPPORTED_MODELS:
             return []
         return list(self._devices_by_model["WLS"].values())
+
+    @property
+    def outdoor_siren(self) -> typing.Sequence[SHCOutdoorSiren]:
+        devices = []
+        if "OUTDOOR_SIREN" in SUPPORTED_MODELS:
+            devices.extend(self._devices_by_model["OUTDOOR_SIREN"].values())
+        return devices
 
     @property
     def presence_simulation_system(

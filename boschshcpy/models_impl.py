@@ -927,6 +927,18 @@ class SHCMicromoduleDimmer(
         )
 
 
+class SHCOutdoorSiren(SHCBatteryDevice, _CommunicationQuality):
+    from .services_impl import SurveillanceAlarmService
+
+    def __init__(self, api, raw_device, raw_device_services):
+        super().__init__(api, raw_device, raw_device_services)
+        self._surveillancealarm_service = self.device_service("SurveillanceAlarm")
+
+    @property
+    def alarm(self) -> SurveillanceAlarmService.State:
+        return self._surveillancealarm_service.value
+
+
 MODEL_MAPPING = {
     "SWD": SHCShutterContact,
     "SWD2": SHCShutterContact2,
@@ -964,6 +976,7 @@ MODEL_MAPPING = {
     "WLS": SHCWaterLeakageSensor,
     "HEATING_CIRCUIT": SHCHeatingCircuit,
     "MICROMODULE_DIMMER": SHCMicromoduleDimmer,
+    "OUTDOOR_SIREN": SHCOutdoorSiren,
 }
 
 SUPPORTED_MODELS = MODEL_MAPPING.keys()
