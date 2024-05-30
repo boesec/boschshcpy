@@ -963,6 +963,9 @@ SERVICE_MAPPING = {
     "WaterLeakageSensor": WaterLeakageSensorService,
     "WaterLeakageSensorTilt": WaterLeakageSensorTiltService,
     "WaterLeakageSensorCheck": WaterLeakageSensorCheckService,
+    "OutdoorSirenPowerSupplyService": OutdoorSirenPowerSupplyService,
+    "LegacyAlarmConfigurationService": LegacyAlarmConfigurationService,
+    "OutdoorSirenService": OutdoorSirenService,
 }
 
 #    "SmokeDetectionControl": SmokeDetectionControlService,

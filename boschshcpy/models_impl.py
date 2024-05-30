@@ -928,9 +928,20 @@ class SHCMicromoduleDimmer(
 
 
 class SHCOutdoorSiren(SHCBatteryDevice, _CommunicationQuality):
+    from .services_impl import OutdoorSirenPowerSupplyService
 
     def __init__(self, api, raw_device, raw_device_services):
         super().__init__(api, raw_device, raw_device_services)
+
+        self._power_supply_service_ = self.device_service("OutdoorSirenPowerSupplyService")
+
+        @property
+        def mainPowerSupplyState(self) -> OutdoorSirenPowerSupplyService.PowerState:
+            return self._power_supply_service_.mainPowerSupplyState
+
+        @mainPowerSupplyState.setter
+        def mainPowerSupplyState(self, state: OutdoorSirenPowerSupplyService.PowerState):
+            self.mainPowerSupplyState.put_state_element("mainPowerSupplyState", state.name)
 
 
 
