@@ -863,6 +863,65 @@ class PresenceSimulationConfigurationService(SHCDeviceService):
         print(f"    presenceSimulationConfigurationState  : {self.enabled}")
 
 
+class OutdoorSirenService(SHCDeviceService):
+
+    def summary(self):
+        super().summary()
+        print(f"    not yet implemented!")
+
+#TODO       "tamperActivated": false,
+            #"acousticAlarmOn": false,
+            #"visualAlarmOn": false,
+            #"legacyAlarm": false,
+            #"smartAlarm": false,
+            #"outdoorSirenConfiguration": {
+            #    "alarmDuration": 3,
+            #    "flashDuration": 15,
+            #    "soundLevel": "HIGH",
+            #    "alarmDelay": 0,
+            #    "flashDelay": 0
+            #}
+
+
+class LegacyAlarmConfigurationService(SHCDeviceService):
+
+    def summary(self):
+        super().summary()
+        print(f"    not yet implemented!")
+#TODO       "profileToActivate": "0",
+            #"triggerSmartAlarmSystemEnabled": false,
+            #"overrideDisarmedSmartAlarmSystemEnabled": false
+
+
+
+class OutdoorSirenPowerSupplyService(SHCDeviceService):
+    class PowerState(Enum):
+        BATTERY = "BATTERY"
+        V230 = "V230"
+        V28 = "V28"
+
+    @property
+    def mainPowerSupplyState(self) -> PowerState:
+        return self.PowerState(self.state["mainPowerSupplyState"])
+
+    @mainPowerSupplyState.setter
+    def mainPowerSupplyState(self, value: PowerState):
+        self.put_state_element("mainPowerSupplyState", value)
+
+    def summary(self):
+        super().summary()
+        print(f"    mainPowerSupplyState    : {self.mainPowerSupplyState}")
+
+#TODO        "acDcError": false,
+            #"batteryDefect": false,
+            #"batteryTemperatureAbnormal": false,
+            #"batteryPercentageRemaining": 84,
+            #"configuredPowerSupply": "AC",
+            #"primaryPowerSupplyOutage": false,
+            #"solarChargingCurrent": 0,
+            #"solarChargingScore": "BAD"
+
+
 SERVICE_MAPPING = {
     "AirQualityLevel": AirQualityLevelService,
     "Alarm": AlarmService,
@@ -914,7 +973,7 @@ SUPPORTED_DEVICE_SERVICE_IDS = SERVICE_MAPPING.keys()
 def build(api, raw_device_service):
     device_service_id = raw_device_service["id"]
     assert (
-        device_service_id in SUPPORTED_DEVICE_SERVICE_IDS
+            device_service_id in SUPPORTED_DEVICE_SERVICE_IDS
     ), "Device service is supported"
     return SERVICE_MAPPING[device_service_id](
         api=api, raw_device_service=raw_device_service
