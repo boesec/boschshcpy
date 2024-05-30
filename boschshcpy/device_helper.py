@@ -266,13 +266,6 @@ class SHCDeviceHelper:
         return list(self._devices_by_model["WLS"].values())
 
     @property
-    def outdoor_siren(self) -> typing.Sequence[SHCOutdoorSiren]:
-        devices = []
-        if "OUTDOOR_SIREN" in SUPPORTED_MODELS:
-            devices.extend(self._devices_by_model["OUTDOOR_SIREN"].values())
-        return devices
-
-    @property
     def presence_simulation_system(
         self,
     ) -> SHCPresenceSimulationSystem:
@@ -309,3 +302,9 @@ class SHCDeviceHelper:
         if "MICROMODULE_DIMMER" not in SUPPORTED_MODELS:
             return []
         return list(self._devices_by_model["MICROMODULE_DIMMER"].values())
+
+    @property
+    def outdoor_siren(self) -> typing.Sequence[SHCOutdoorSiren]:
+        if "OUTDOOR_SIREN" not in SUPPORTED_MODELS:
+            return []
+        return list(self._devices_by_model["OUTDOOR_SIREN"].values())

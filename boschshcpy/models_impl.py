@@ -928,15 +928,10 @@ class SHCMicromoduleDimmer(
 
 
 class SHCOutdoorSiren(SHCBatteryDevice, _CommunicationQuality):
-    from .services_impl import SurveillanceAlarmService
 
     def __init__(self, api, raw_device, raw_device_services):
         super().__init__(api, raw_device, raw_device_services)
-        self._surveillancealarm_service = self.device_service("SurveillanceAlarm")
 
-    @property
-    def alarm(self) -> SurveillanceAlarmService.State:
-        return self._surveillancealarm_service.value
 
 
 MODEL_MAPPING = {
